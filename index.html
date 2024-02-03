@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" type="text/css" href="style.css">
+	<title>Star Review</title>
+</head>
+<body>
+	<div class="content">
+		<div class="star-rating">
+			<input type="radio" id="5-stars" name="rating" value="5">
+			<label for="5-stars">&#9733;</label>
+			<input type="radio" id="4-stars" name="rating" value="4">
+			<label for="4-stars">&#9733;</label>
+			<input type="radio" id="3-stars" name="rating" value="3">
+			<label for="3-stars">&#9733;</label>
+			<input type="radio" id="2-stars" name="rating" value="2">
+			<label for="2-stars">&#9733;</label>
+			<input type="radio" id="1-stars" name="rating" value="1">
+			<label for="1-stars">&#9733;</label>
+			<p id="p">0.0</p>
+		</div>
+	</div>
+
+	<script>
+		document.addEventListener('DOMContentLoaded', (event) => {
+			const stars = document.querySelectorAll('.star-rating input');
+			const p = document.querySelector('#p');
+
+			stars.forEach(star => {
+				star.addEventListener('change', (e) => {
+					localStorage.setItem('rating', e.target.value);
+					if (p !== null) {
+						p.innerHTML = parseFloat(e.target.value).toFixed(1);
+					}
+				});
+			});
+
+			// Check for saved rating
+			const savedRating = localStorage.getItem('rating');
+			if (savedRating) {
+				const starToCheck = document.querySelector(`.star-rating input[value="${savedRating}"]`);
+				if (starToCheck) {
+					starToCheck.checked = true;
+					if (p !== null) {
+						p.innerHTML = parseFloat(savedRating).toFixed(1);
+					}
+				}
+			}
+		});
+	</script>
+</body>
+</html>
